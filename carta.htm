@@ -1,0 +1,120 @@
+<html><head>
+        <meta charset="utf-8">
+        <title>Carta de Compensação</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment-with-locales.min.js" integrity="sha256-ZykW30UBCXWkPGsVyVPdJlUrce9/PawgYCEzinA4pnU=" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/locale/pt-br.js" integrity="sha256-LosziN79TxO+Pb6NSpePf3lMaUeq8Iwg8adFrVaB2Sg=" crossorigin="anonymous"></script>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    </head><style>@media print {
+    #ocultar{
+    display:none;
+    }
+    }</style>
+      <script type="text/javascript">
+
+
+  var keyStr = "ABCDEFGHIJKLMNOP" +
+               "QRSTUVWXYZabcdef" +
+               "ghijklmnopqrstuv" +
+               "wxyz0123456789+/" +
+               "=";
+               
+   function decode64(input) {
+     var output = "";
+     var chr1, chr2, chr3 = "";
+     var enc1, enc2, enc3, enc4 = "";
+     var i = 0;
+
+     // remove all characters that are not A-Z, a-z, 0-9, +, /, or =
+     var base64test = /[^A-Za-z0-9\+\/\=]/g;
+     if (base64test.exec(input)) {
+        alert("There were invalid base64 characters in the input text.\n" +
+              "Valid base64 characters are A-Z, a-z, 0-9, '+', '/',and '='\n" +
+              "Expect errors in decoding.");
+     }
+     input = input.replace(/[^A-Za-z0-9\+\/\=]/g, "");
+
+     do {
+        enc1 = keyStr.indexOf(input.charAt(i++));
+        enc2 = keyStr.indexOf(input.charAt(i++));
+        enc3 = keyStr.indexOf(input.charAt(i++));
+        enc4 = keyStr.indexOf(input.charAt(i++));
+
+        chr1 = (enc1 << 2) | (enc2 >> 4);
+        chr2 = ((enc2 & 15) << 4) | (enc3 >> 2);
+        chr3 = ((enc3 & 3) << 6) | enc4;
+
+        output = output + String.fromCharCode(chr1);
+
+        if (enc3 != 64) {
+           output = output + String.fromCharCode(chr2);
+        }
+        if (enc4 != 64) {
+           output = output + String.fromCharCode(chr3);
+        }
+
+        chr1 = chr2 = chr3 = "";
+        enc1 = enc2 = enc3 = enc4 = "";
+
+     } while (i < input.length);
+
+     return unescape(output);
+  }
+
+ </script>            
+    
+    <body>
+
+<div class="section"><div class="container"><div class="row"><div class="col-md-12"><p style="font-family: 'Open Sans', sans-serif;font-size:15px;">Pindamonhangaba, <span id="hoje">ERRO NA DATA</span>&nbsp;<br><br><br><br>
+À&nbsp;<br><!-- Ana Claudia Galhardo Palma--> Mario Augusto dos Reis&nbsp;<br>
+Gerente <!-- da Unidade de Pindamonhangaba-->em exercício.&nbsp;<br><br><br><br>
+Eu, <span id="nome">#</span>, ID <span id="idusr">#</span>, funcionário(a) dessa unidade, <span id="tipo">%tipo%</span><br><br><br><br>
+Dia&nbsp;<span id="dia">#</span> compensarei <span id="tcomp">#</span>&nbsp;<br><br><br><br><br><br>
+Atenciosamente,&nbsp;<br><br><br><br>
+_______________________________________________________<br><br>
+Assinatura da funcionário(a)</p></div></div></div>
+    <div class="section" id="ocultar">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <a class="btn btn-block btn-lg btn-success" onclick="window.print()"><b>IMPRIMIR</b></a>
+          </div>
+        </div>
+                <div class="row">
+          <div class="col-md-12">
+            <p class="text-center">Na caixa de impressão, clique em <b>Mais definições</b> e desmarque a opção <b>Cabeçalhos
+              e rodapés</b>.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+
+<script>
+function getUrlParameter(name) {
+    name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+    var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+    var results = regex.exec(location.search);
+    return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+};
+
+dados = decode64(getUrlParameter('d')).split("|");
+$("#nome").text(dados[0]);
+$("#idusr").text(dados[1]);
+if(dados[2]==1){
+	texto = "solicito autorização para compensar horas que possuo a débito, conforme abaixo:";
+}else{
+	texto = "solicito autorização para ausentar-me do trabalho com a finalidade de compensar horas que possuo a crédito, conforme abaixo:";
+}
+$("#tipo").text(texto);
+$("#dia").text(dados[3]);
+$("#tcomp").text(dados[4]);
+$("#hoje").text(dados[5]);
+
+
+</script>
+</body>
+</html>
